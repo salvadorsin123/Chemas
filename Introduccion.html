@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introducción</title>
+    <style>
+        /* 1. CONFIGURACIÓN GENERAL - ESTILO MATE */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            
+            /* Fondo Gris Oscuro Sólido */
+            background-color: #1e2024;
+            color: #e0e0e0; /* Texto blanco suave */
+            
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        h1 {
+            /* Azul cielo pálido */
+            color: #90caf9;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 30px;
+            
+            /* Línea inferior color Azul Acero */
+            border-bottom: 3px solid #546e7a;
+            padding-bottom: 10px;
+        }
+
+        /* 2. CONTENEDOR DEL TEXTO */
+        .content-container {
+            max-width: 800px;
+            
+            /* Fondo gris medio (Mate) */
+            background: #2a2d33;
+            padding: 40px;
+            border-radius: 12px;
+            
+            /* Borde sutil y sombra difusa */
+            border: 1px solid #3e4249;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            
+            text-align: justify;
+        }
+
+        p {
+            margin-bottom: 20px;
+            font-size: 1.1em;
+            color: #b0bec5; /* Gris azulado para párrafos (descansa la vista) */
+        }
+
+        /* Resaltar las negritas */
+        strong {
+            color: #ffffff; /* Blanco puro para destacar conceptos clave */
+            font-weight: 600;
+        }
+
+        /* 3. ESTILO DE LA INFOGRAFÍA */
+        .infographic {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-top: 30px;
+            
+            /* Borde Azul Acero */
+            border: 2px solid #546e7a;
+            
+            /* Opacidad ligera para que no brille tanto en fondo oscuro (opcional) */
+            opacity: 0.95; 
+            transition: opacity 0.3s ease;
+        }
+
+        .infographic:hover {
+            opacity: 1; /* Al pasar el mouse se ve al 100% */
+        }
+
+        /* 4. BOTÓN DE VOLVER (Consistente con las otras páginas) */
+        .btn-back {
+            margin-top: 40px;
+            padding: 12px 30px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            
+            /* Fondo transparente y borde sólido */
+            background-color: transparent;
+            color: #90caf9;
+            border: 2px solid #546e7a;
+            border-radius: 6px;
+            
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-back:hover {
+            background-color: #546e7a;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>Introducción</h1>
+
+    <div class="content-container">
+        <p>
+            En esta obra <strong>Octavio Mavila Medina</strong> aborda la interrogante de 
+            por qué existen diferencias tan grandes entre países pobres y ricos. A través de su análisis el 
+            autor descarta que el desarrollo dependa de factores como la antigüedad de la nación, la abundancia 
+            de recursos naturales o la inteligencia de sus habitantes.
+        </p>
+        
+        <p>
+            La idea central del libro es que el progreso y la riqueza dependen de un solo factor crucial: <strong>las actitudes de comportamiento 
+                en las mentes de las personas</strong>. Como ruta hacia el cambio se presenta "El Decálogo del Desarrollo", una 
+                lista de diez hábitos fundamentales observados en las sociedades exitosas que si son adoptados mayoritariamente permitirían a un 
+                país salir del subdesarrollo en poco tiempo.
+        </p>
+
+        <img src="Img/Infografia.png" alt="Infografía del Decálogo del Desarrollo" class="infographic">
+    </div>
+
+    <button class="btn-back" onclick="window.location.href='Menu.html'">← Volver al Menú</button>
+
+</body>
+</html>

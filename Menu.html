@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú Principal</title>
+    <style>
+        /* 1. CONFIGURACIÓN DEL FONDO Y FUENTE */
+        body {
+            margin: 0;
+            height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            
+            /* Fondo degradado radial: Azul oscuro en el centro, negro en los bordes */
+            background: radial-gradient(circle at center, #0b2b40 0%, #020b14 100%);
+            
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        /* 2. ESTILO DEL TÍTULO */
+        h1 {
+            font-size: 3rem;
+            text-transform: uppercase;
+            letter-spacing: 8px; /* Espacio amplio entre letras */
+            margin-bottom: 40px;
+            color: #00e0ff; /* El Cian del logo */
+            text-shadow: 0 0 20px rgba(0, 224, 255, 0.6); /* Efecto de luz de neón */
+        }
+
+        /* 3. CONTENEDOR DEL MENÚ (Caja de cristal) */
+        .menu-container {
+            display: flex;
+            flex-direction: column;
+            gap: 25px; /* Espacio entre botones */
+            
+            /* Estilo "Glassmorphism" (Efecto vidrio) */
+            background: rgba(255, 255, 255, 0.05);
+            padding: 50px;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 224, 255, 0.3); /* Borde sutil cian */
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        /* 4. ESTILO DE LOS BOTONES */
+        button {
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            width: 250px;
+            cursor: pointer;
+            transition: all 0.3s ease; /* Suaviza la animación */
+            
+            /* Diseño del botón en reposo */
+            background-color: transparent;
+            color: #00e0ff;
+            border: 2px solid #00e0ff;
+            border-radius: 50px; /* Bordes totalmente redondos */
+            box-shadow: 0 0 10px rgba(0, 224, 255, 0.1);
+        }
+
+        /* 5. EFECTO AL PASAR EL MOUSE (HOVER) */
+        button:hover {
+            background-color: #00e0ff; /* Se rellena de cian */
+            color: #020b14; /* Letras oscuras para contraste */
+            box-shadow: 0 0 25px rgba(0, 224, 255, 0.8); /* Resplandor fuerte */
+            transform: scale(1.05); /* Crece un poco */
+        }
+
+        /* Opcional: Para el logo si decides ponerlo aquí también */
+        .logo-pequeno {
+            width: 80px;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 10px #00e0ff);
+        }
+    </style>
+</head>
+<body>
+
+    <h1>MENÚ</h1>
+
+    <div class="menu-container">
+        <button onclick="navegarIntro()">INTRODUCCIÓN</button>
+        <button onclick="navegarDinamica()">DINÁMICA</button>
+        <button onclick="navegarAutor()">AUTOR</button>
+    </div>
+
+    <script>
+        // Tus funciones originales se mantienen igual
+        function navegarIntro() {
+            window.location.href = "introduccion.html";
+        }
+
+        function navegarDinamica() {
+            window.location.href = "dinamica.html";
+        }
+
+        function navegarAutor() {
+            window.location.href = "autor.html";
+        }
+    </script>
+
+</body>
+</html>

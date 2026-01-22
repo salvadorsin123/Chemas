@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decálogo del Desarrollo</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            /* El mismo fondo moderno */
+            background: radial-gradient(circle at center, #0b2b40 0%, #020b14 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            overflow: hidden; /* Evita que aparezcan barras de desplazamiento si algo se pasa un poco */
+        }
+
+        h1 {
+            font-size: 3rem; /* En celulares podrías bajar esto a 2rem si quisieras */
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #00e0ff;
+            text-shadow: 0 0 15px rgba(0, 224, 255, 0.6);
+        }
+
+        img {
+            /* AQUÍ ESTÁ EL CAMBIO IMPORTANTE DE DIMENSIONES */
+            height: 65vh; /* La imagen ocupará el 65% de la altura de tu pantalla */
+            width: auto;  /* El ancho se ajustará automático para no deformar la foto */
+            max-width: 90%; /* Nos aseguramos que no se salga del ancho en celulares */
+            
+            border: 2px solid #005f73;
+            border-radius: 15px;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.6); /* Sombra más grande */
+            transition: transform 0.3s ease;
+            object-fit: contain; /* Asegura que se vea completa */
+        }
+
+        img:hover {
+            transform: scale(1.02);
+            border-color: #00e0ff;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        button {
+            margin-top: 30px;
+            padding: 15px 60px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background-color: transparent;
+            color: #00e0ff;
+            border: 2px solid #00e0ff;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(0, 224, 255, 0.2);
+        }
+
+        button:hover {
+            background-color: #00e0ff;
+            color: #020b14;
+            box-shadow: 0 0 25px rgba(0, 224, 255, 0.8);
+            transform: translateY(-3px);
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>Decálogo del Desarrollo</h1>
+    
+    <img src="Img/DecalogoIMG.png" alt="Decálogo del desarrollo">
+
+    <a href="Menu.html">
+        <button>Entrar</button>
+    </a>
+
+</body>
+</html>

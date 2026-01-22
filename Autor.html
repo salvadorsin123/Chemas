@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autor</title>
+    <style>
+        /* 1. FONDO Y ESTILO GENERAL - ESTILO MATE */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            
+            /* Fondo sólido color gris oscuro mate (sin degradado brillante) */
+            background-color: #1e2024;
+            
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #e0e0e0; /* Texto blanco suave (no blanco puro para no lastimar la vista) */
+            padding: 20px;
+        }
+
+        /* 2. TARJETA DEL AUTOR */
+        .author-header {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 40px;
+            padding: 30px;
+            
+            /* CAMBIO: Fondo plano (Flat), sin brillo */
+            background-color: #2a2d33; /* Un gris un poco más claro que el fondo */
+            border: 1px solid #3e4249; /* Borde sutil gris */
+            border-radius: 12px;
+            
+            /* Sombra muy suave y difusa, no brillante */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            
+            max-width: 700px;
+            width: 90%;
+        }
+
+        .author-photo {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            /* CAMBIO: Borde color "Azul Acero" mate, sin brillo neón */
+            border: 4px solid #546e7a; 
+        }
+
+        .author-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .author-info h2 {
+            margin: 0 0 10px 0;
+            font-size: 1.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            /* CAMBIO: Color azul grisáceo suave */
+            color: #90caf9; 
+            /* Se eliminó el text-shadow (resplandor) */
+        }
+
+        .author-info p {
+            margin: 5px 0;
+            color: #b0bec5; /* Gris azulado claro */
+            font-size: 1.1rem;
+        }
+
+        /* 3. CUADRÍCULA DE FOTOS */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            max-width: 700px;
+            width: 90%;
+            margin-bottom: 40px;
+        }
+
+        .grid-item {
+            aspect-ratio: 1 / 1;
+            /* Borde discreto */
+            border: 2px solid #3e4249;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #2a2d33;
+            transition: all 0.3s ease;
+        }
+
+        /* Efecto al pasar el mouse: Elegante, sin destellos */
+        .grid-item:hover {
+            border-color: #90caf9; /* Azul suave */
+            transform: translateY(-2px); /* Se mueve ligeramente hacia arriba */
+        }
+
+        .grid-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            /* Filtro opcional: baja un poco la saturación de las fotos para que encajen en el estilo mate */
+            filter: saturate(90%); 
+            transition: filter 0.3s;
+        }
+        
+        .grid-item:hover img {
+             filter: saturate(100%); /* Al pasar el mouse recuperan su color total */
+        }
+
+        /* 4. BOTÓN DE VOLVER - ESTILO PLANO */
+        .back-button {
+            padding: 12px 40px;
+            font-size: 16px;
+            font-weight: 600; /* Semi-bold */
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            
+            /* Fondo y borde mate */
+            background-color: transparent;
+            color: #90caf9;
+            border: 2px solid #546e7a;
+            
+            border-radius: 6px; /* Menos redondeado, más serio */
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #546e7a;
+            color: #ffffff;
+            border-color: #546e7a;
+            /* Sin resplandor, solo cambio de color sólido */
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            .author-header {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="author-header">
+        <img src="Img/FotoPerfil.jpeg" alt="Foto del Autor" class="author-photo" id="authorImage">
+        <div class="author-info">
+            <h2>José Manuel Miramontes Espinoza</h2>
+            <p>Ingeniería de Software</p>
+            <p>josemiramontesespinoza@gmail.com</p>
+        </div>
+    </header>
+
+    <section class="photo-grid">
+        <div class="grid-item" onclick="seleccionarImagen(this)"><img src="Img/gto.jpg" alt="Foto 1"></div>
+        <div class="grid-item" onclick="seleccionarImagen(this)"><img src="Img/Gallos.jpeg" alt="Foto 2"></div>
+        <div class="grid-item" onclick="seleccionarImagen(this)"><img src="Img/alco.jpg" alt="Foto 3"></div>
+        <div class="grid-item" onclick="seleccionarImagen(this)"><img src="Img/uaq.jpg" alt="Foto 4"></div>
+        <div class="grid-item" onclick="seleccionarImagen(this)"><img src="Img/libro.png" alt="Foto 5"></div>
+        <div class="grid-item" onclick="seleccionarImagen(this)"><img src="Img/iglesia.jpg" alt="Foto 6"></div>
+        
+        
+    </section>
+
+    <a href="Menu.html" class="back-button">← Volver al Menú</a>
+
+    <input type="file" id="fileInput" accept="image/*">
+
+    <script>
+        let elementoActual = null;
+        const fileInput = document.getElementById('fileInput');
+
+        function seleccionarImagen(elemento) {
+            elementoActual = elemento;
+            fileInput.click();
+        }
+
+        fileInput.addEventListener('change', function(event) {
+            const archivo = event.target.files[0];
+            if (archivo && elementoActual) {
+                const lector = new FileReader();
+                lector.onload = function(e) {
+                    let img = elementoActual.querySelector('img');
+                    if (!img) {
+                        img = document.createElement('img');
+                        elementoActual.appendChild(img);
+                    }
+                    img.src = e.target.result;
+                };
+                lector.readAsDataURL(archivo);
+            }
+            fileInput.value = ''; 
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dinámica: Sopa de Letras Interactiva</title>
+    <style>
+        /* --- ESTILOS GENERALES (MATE / DARK) --- */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1e2024;
+            color: #e0e0e0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            margin: 0;
+            min-height: 100vh;
+            /* Evita el scroll "bounce" en móviles al dibujar */
+            touch-action: none; 
+        }
+
+        h1 {
+            color: #90caf9;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        .game-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            justify-content: center;
+            align-items: flex-start;
+            background: #2a2d33;
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid #3e4249;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            max-width: 1000px;
+            width: 95%;
+        }
+
+        /* --- ZONA DE DIBUJO (CANVAS) --- */
+        .puzzle-area {
+            position: relative; /* Necesario para superponer el canvas */
+            width: 500px;
+            max-width: 100%;
+        }
+
+        /* La imagen base */
+        .puzzle-image {
+            width: 100%;
+            display: block;
+            border: 4px solid #546e7a;
+            border-radius: 8px;
+            filter: brightness(0.95);
+            /* Importante: evitar que la imagen se pueda arrastrar */
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+
+        /* El lienzo transparente encima de la imagen */
+        #drawingCanvas {
+            position: absolute;
+            top: 4px; /* Ajuste por el borde de la imagen */
+            left: 4px;
+            cursor: crosshair; /* Cursor en forma de cruz */
+            touch-action: none; /* Desactiva scroll al tocar el canvas */
+            border-radius: 4px;
+        }
+
+        /* --- BARRA DE HERRAMIENTAS --- */
+        .toolbar {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            justify-content: center;
+        }
+
+        .tool-btn {
+            background-color: #2a2d33;
+            border: 1px solid #546e7a;
+            color: #b0bec5;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .tool-btn:hover {
+            background-color: #3e4249;
+            color: white;
+        }
+
+        .tool-btn.active {
+            background-color: #546e7a;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* --- LISTA DE PALABRAS --- */
+        .word-list-container {
+            min-width: 250px;
+        }
+
+        .word-list-container h3 {
+            border-bottom: 2px solid #546e7a;
+            padding-bottom: 10px;
+            margin-top: 0;
+            color: #e0e0e0;
+        }
+        
+        .word-list-container p {
+            color: #b0bec5 !important;
+            margin-bottom: 15px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            padding: 10px;
+            margin: 6px 0;
+            background-color: #1e2024;
+            border: 1px solid #3e4249;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+            color: #b0bec5;
+        }
+
+        li:hover {
+            border-color: #90caf9;
+            color: #ffffff;
+            transform: translateX(5px);
+        }
+
+        li.found {
+            text-decoration: line-through;
+            color: #546e7a;
+            background-color: #15171a;
+            opacity: 0.6;
+            transform: none;
+        }
+
+        /* --- BOTÓN VOLVER --- */
+        .btn-back {
+            margin-top: 30px;
+            padding: 12px 30px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background-color: transparent;
+            color: #90caf9;
+            border: 2px solid #546e7a;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-back:hover {
+            background-color: #546e7a;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Sopa de Letras</h1>
+
+    <div class="game-container">
+        
+        <div class="puzzle-wrapper">
+            <div class="puzzle-area" id="puzzleContainer">
+                <img src="Img/sopa.png" alt="Sopa de Letras" class="puzzle-image" id="sopaImg">
+                <canvas id="drawingCanvas"></canvas>
+            </div>
+
+            <div class="toolbar">
+                <button class="tool-btn active" onclick="setTool('pencil', this)">✏️ Lápiz</button>
+                <button class="tool-btn" onclick="setTool('eraser', this)">🧹 Borrador</button>
+                <button class="tool-btn" onclick="clearCanvas()">🗑️ Limpiar Todo</button>
+            </div>
+        </div>
+
+        <div class="word-list-container">
+            <h3>Palabras a buscar:</h3>
+            <p style="font-size: 0.9em;">1. Encuentra y marca en la imagen.<br>2. Haz clic en la lista para tacharla.</p>
+            
+            <ul id="listaPalabras">
+                <li onclick="marcar(this)">ACTITUDES</li>
+                <li onclick="marcar(this)">DESARROLLO</li>
+                <li onclick="marcar(this)">DECÁLOGO</li>
+                <li onclick="marcar(this)">ORDEN</li>
+                <li onclick="marcar(this)">LIMPIEZA</li>
+                <li onclick="marcar(this)">PUNTUALIDAD</li>
+                <li onclick="marcar(this)">RESPONSABILIDAD</li>
+                <li onclick="marcar(this)">SUPERACIÓN</li>
+                <li onclick="marcar(this)">HONRADEZ</li>
+                <li onclick="marcar(this)">AHORRO</li>
+            </ul>
+        </div>
+    </div>
+
+    <button class="btn-back" onclick="window.location.href='Menu.html'">← Volver al Menú</button>
+
+    <script>
+        // --- 1. LÓGICA DE LA LISTA (TACHAR) ---
+        function marcar(elemento) {
+            elemento.classList.toggle('found');
+        }
+
+        // --- 2. LÓGICA DE DIBUJO EN CANVAS ---
+        const canvas = document.getElementById('drawingCanvas');
+        const ctx = canvas.getContext('2d');
+        const img = document.getElementById('sopaImg');
+        let isDrawing = false;
+        let currentTool = 'pencil'; // 'pencil' o 'eraser'
+
+        // Configuración inicial al cargar la imagen
+        img.onload = function() {
+            resizeCanvas();
+        };
+        // Por si la imagen ya está en caché
+        if (img.complete) {
+            resizeCanvas();
+        }
+        // Ajustar si cambian el tamaño de ventana
+        window.addEventListener('resize', resizeCanvas);
+
+        function resizeCanvas() {
+            // El canvas debe tener el mismo tamaño interno que la imagen mostrada
+            canvas.width = img.clientWidth;
+            canvas.height = img.clientHeight;
+        }
+
+        // Configuración del estilo de línea
+        function setupContext() {
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            
+            if (currentTool === 'pencil') {
+                ctx.globalCompositeOperation = 'source-over'; // Pintar normal
+                ctx.strokeStyle = 'rgba(144, 202, 249, 0.5)'; // Azul transparente (estilo marcador)
+                ctx.lineWidth = 15; // Grosor del marcador
+            } else {
+                ctx.globalCompositeOperation = 'destination-out'; // Borrar píxeles
+                ctx.lineWidth = 30; // Borrador más grande
+            }
+        }
+
+        // --- Eventos de Ratón (PC) ---
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', stopDrawing);
+        canvas.addEventListener('mouseout', stopDrawing);
+
+        // --- Eventos Táctiles (Móvil) ---
+        canvas.addEventListener('touchstart', (e) => {
+            e.preventDefault(); // Evitar scroll
+            startDrawing(e.touches[0]);
+        });
+        canvas.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            draw(e.touches[0]);
+        });
+        canvas.addEventListener('touchend', stopDrawing);
+
+        function startDrawing(e) {
+            isDrawing = true;
+            setupContext();
+            ctx.beginPath();
+            const { x, y } = getPos(e);
+            ctx.moveTo(x, y);
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            const { x, y } = getPos(e);
+            ctx.lineTo(x, y);
+            ctx.stroke();
+        }
+
+        function stopDrawing() {
+            isDrawing = false;
+            ctx.closePath();
+        }
+
+        // Obtener posición exacta del cursor/dedo relativo al canvas
+        function getPos(e) {
+            const rect = canvas.getBoundingClientRect();
+            return {
+                x: e.clientX - rect.left,
+                y: e.clientY - rect.top
+            };
+        }
+
+        // --- HERRAMIENTAS ---
+        function setTool(tool, btn) {
+            currentTool = tool;
+            
+            // Actualizar botones visualmente
+            document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
+            if(btn) btn.classList.add('active');
+        }
+
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+    </script>
+
+</body>
+</html>
